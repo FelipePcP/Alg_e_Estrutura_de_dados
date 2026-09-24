@@ -46,7 +46,6 @@ struct no *excluir(struct no *cabeca, int numero) {     //exclui o numero que es
 	//cenario facil - lista vazia
 	if (cabeca == NULL) {
 		return cabeca;
-		printf("vai se fuder vagabundo a lista ta nula\n");
 	}
 	//cenario facil - excluir um unico
 	if (cabeca -> numero == numero) {
