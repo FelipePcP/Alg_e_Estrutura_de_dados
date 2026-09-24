@@ -45,7 +45,6 @@ struct no *inserir(struct no *cabeca, int numero) {
 struct no *excluir(struct no *cabeca, int numero) {
 	//cenario muito facil: lista vazia
 	if (cabeca == NULL) {
-		printf("se fode seu imbecil de merda\n");
 		return cabeca;
 	}
 	//cenario facil: exculir o primeiro
@@ -65,7 +64,6 @@ struct no *excluir(struct no *cabeca, int numero) {
 	
 	//cenario dificil: NAO foi encontrado
 	if (anterior -> proximo == NULL) {
-		printf("imbecil, esse numero n existe");
 		return cabeca;
 	}
 	//cenario deficil: excluir no meio ou no fim
