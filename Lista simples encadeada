@@ -1,0 +1,119 @@
+/////////////////////////////////////////////////////////////
+//Programa que implementa uma lista simplesmente encadeada //
+/////////////////////////////////////////////////////////////
+
+#include <stdio.h>
+#include <stdlib.h>
+
+//////////////////////////////////////
+//Estrutura que modela o no da lista//
+//////////////////////////////////////
+
+struct no {
+	int numero;
+	struct no *proximo;
+};
+
+////////////////////////////////////
+//Funcao que insere um no na lista//
+////////////////////////////////////
+
+struct no *inserir(struct no *cabeca, int numero) {
+	//criacao do novo No
+	struct no *novoNo = (struct no *) malloc(sizeof(struct no));
+	novoNo -> numero= numero;
+	novoNo -> proximo = NULL;
+	
+	//cenario facil lista vazia
+	if (cabeca == NULL) {
+		return novoNo;
+	}
+	
+	//cenario dificil: lista NAO vazia	
+	struct no *ultimo = cabeca;
+	while (ultimo -> proximo != NULL) {
+		ultimo = ultimo -> proximo;
+	}
+	ultimo -> proximo = novoNo;
+	return cabeca;	
+}
+
+///////////////////////////////////
+//funcao que exclui o no da lista//
+///////////////////////////////////
+
+struct no *excluir(struct no *cabeca, int numero) {
+	//cenario muito facil: lista vazia
+	if (cabeca == NULL) {
+		printf("se fode seu imbecil de merda\n");
+		return cabeca;
+	}
+	//cenario facil: exculir o primeiro
+	if (cabeca -> numero == numero) {
+		struct no *limpaBunda = cabeca;
+		cabeca = cabeca -> proximo;
+		free(limpaBunda);
+		return cabeca;
+	}
+	
+	//procurando o no anterior da lista
+	struct no *anterior = cabeca;
+	while ((anterior -> proximo !=NULL) && //NAo achei e parei no ultimo
+			(anterior -> proximo -> numero != numero)) {  //achei e parei no anterior
+		anterior = anterior -> proximo;
+	}
+	
+	//cenario dificil: NAO foi encontrado
+	if (anterior -> proximo == NULL) {
+		printf("imbecil, esse numero n existe");
+		return cabeca;
+	}
+	//cenario deficil: excluir no meio ou no fim
+	struct no *limpaBunda = anterior -> proximo;
+	anterior -> proximo = anterior -> proximo -> proximo;
+	free(limpaBunda);
+	return cabeca;
+}
+
+//////////////////////////////
+//funcao que imprime a lista//
+//////////////////////////////
+
+void imprimir(struct no *cabeca) {
+	struct no *ponteiro = cabeca;
+	while (ponteiro != NULL) {
+		printf("%d\n", ponteiro -> numero);
+		ponteiro = ponteiro -> proximo;
+	}
+}
+
+////////////////////////////////////////////
+//funcao principal de execucao do programa//
+////////////////////////////////////////////
+
+int main(){
+	struct no *cabeca = NULL;
+	
+	//primeiro teste
+	imprimir(cabeca);
+	cabeca = excluir(cabeca, 100);
+	
+	cabeca = inserir(cabeca, 1);
+	cabeca = inserir(cabeca, 2);
+	cabeca = inserir(cabeca, 3);
+	cabeca = inserir(cabeca, 4);
+	cabeca = inserir(cabeca, 5);
+	imprimir(cabeca);
+	cabeca = excluir(cabeca, 1);
+	cabeca = excluir(cabeca, 3);
+	cabeca = excluir(cabeca, 5);
+	imprimir(cabeca);
+	
+	//segundo teste
+	int i;
+	for (i = 0 ; i < 1000000 ; i++){
+	cabeca = inserir(cabeca, i);
+	printf("%d\n", i);
+	}
+	return 0;
+}
